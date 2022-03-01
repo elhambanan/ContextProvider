@@ -1,5 +1,7 @@
 import React, { useContext, useReducer} from "react";
-import {productdData} from "../../db/products"
+import {productsData} from "../../db/products";
+import _ from 'lodash'
+import { act } from "react-dom/test-utils";
 
 const ProductContext = React.createContext(); //state
 const ProductContextDispacher = React.createContext(); //setState
@@ -50,13 +52,41 @@ const ProductContextDispacher = React.createContext(); //setState
             updatedProducts[index] = product;
             return updatedProducts
         }  
+        case "filter" : {
+            if(action.selectedOption.value === ""){
+                return productsData
+            }else{
+                const filteredProducts = productsData.filter(
+                (p) => p.availableSizes.indexOf(action.selectedOption.value ) >= 0)
+                return filteredProducts;
+            }
+        }  
+        case "sort" :{
+            if (action.selectedOption.value === "highest"){
+                return  _.orderBy(state, ['price'],['desc'])
+            }else {
+                return  _.orderBy(state, ['price'], ['asc'] );
+            }
+        } 
+        case "search" : {
+            const value = action.event.target.value;
+            if(value === ""){
+                return productsData
+            }else{
+                const searchItem = productsData.filter((p) =>
+                     p.title.toLowerCase().includes(value.toLowerCase()));
+                return searchItem;     
+            }
+        }
+        
         default: 
             return state;        
-    }
+
 }  
+}
 
 const ProductProvider = ({children}) => {
-    const [products, dispatch] = useReducer(reducer, productdData);
+    const [products, dispatch] = useReducer(reducer, productsData);
     return ( 
         <ProductContext.Provider value={products}>
             <ProductContextDispacher.Provider value={dispatch}>

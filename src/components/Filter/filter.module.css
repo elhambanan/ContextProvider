@@ -1,0 +1,14 @@
+.filter {
+   width: 40rem; 
+   display: flex ;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 1rem;
+   padding-left: 1rem;
+}
+/* .selectContainer {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+} */
