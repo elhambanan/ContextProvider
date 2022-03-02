@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useProductsActions } from "../../components/Providers/ProductsProviders";
 import styles from "./search.module.css"
 
-const SearchBar = () => {
+const SearchBar = ({filter}) => {
     const [value, setValue] = useState("");
     const dispatch = useProductsActions();
 
     const searchHandler = (e) => {
-        dispatch({type : "search", event: e})
-        setValue(e.target.value)
+        dispatch({type : "filter", selectedOption : filter });
+        dispatch({type : "search", event: e});
+        setValue(e.target.value);
     }
   
     return ( 

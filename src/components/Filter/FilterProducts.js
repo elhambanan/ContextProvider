@@ -3,9 +3,10 @@ import { useProductsActions } from "../Providers/ProductsProviders";
 import Select from 'react-select';
 import styles from "../Filter/filter.module.css"
 import SelectComponent from "../../common/Select/Select";
+import SearchBar from "../../common/Search/Search";
 
-const options = [
-    {value: "", label: "All"},
+const filterOptions = [
+    {value: "", label: "All"}, 
     {value: "S", label: "S"},
     {value: "M", label: "M"},
     {value: "L", label: "L"},
@@ -18,14 +19,14 @@ const sortOptions = [
 ]
 const FilterProducts = () => {
     const dispatch = useProductsActions();
-    const [value, setValue] = useState("");
+    const [filter, setFilter] = useState("");
     const [sort, setSort] = useState("");
 
-    const changeHandler = (selectedOption) => {
+    const filterHandler = (selectedOption) => {
         console.log(selectedOption)
         dispatch({type : "filter", selectedOption });
         dispatch({type : "sort", selectedOption: sort})
-        setValue(selectedOption)
+        setFilter(selectedOption)
     }
     const sortHandler = (selectedOption) => {
         dispatch({type : "sort", selectedOption})
@@ -33,38 +34,25 @@ const FilterProducts = () => {
     }
 
     return ( 
-        <div className={styles.filter}>
-            <p>filter products based on:</p>
-            {/* <div className={styles.selectContainer}>
-                <span>order by</span>
-                <Select
-                    onChange = {changeHandler}
-                    value = {value}
-                    options = {options}
+        <section>
+            <SearchBar filter = {filter}/>
+            <div className={styles.filter}>
+                <p>filter products based on:</p>
+                <SelectComponent 
+                    title = "filter by size"
+                    onChange = {filterHandler}
+                    value = {filter}
+                    options = {filterOptions}
                 />
-            </div>
-           
-            <div className={styles.selectContainer}>
-                <span>sort by</span>
-                <Select
+                <SelectComponent 
+                    title = "sort by price"
                     onChange = {sortHandler}
                     value = {sort}
                     options = {sortOptions}
                 />
-            </div> */}
-             <SelectComponent 
-                title = "filter by size"
-                onChange = {changeHandler}
-                value = {value}
-                options = {options}
-            />
-            <SelectComponent 
-                title = "sort by price"
-                onChange = {sortHandler}
-                value = {sort}
-                options = {sortOptions}
-            />
-        </div>
+            </div>
+        </section>
+     
      );
 }
  

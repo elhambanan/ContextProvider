@@ -71,7 +71,7 @@ const ProductContextDispacher = React.createContext(); //setState
         case "search" : {
             const value = action.event.target.value;
             if(value === ""){
-                return productsData
+                return state
             }else{
                 const searchItem = productsData.filter((p) =>
                      p.title.toLowerCase().includes(value.toLowerCase()));

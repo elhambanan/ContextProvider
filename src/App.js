@@ -13,7 +13,6 @@ const App= () => {
       <>
         <ProductsProvider>
           <NavBar />
-          <SearchBar />
           <FilterProducts />
           <ProductList/>
         </ProductsProvider>
